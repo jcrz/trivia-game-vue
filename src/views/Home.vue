@@ -29,6 +29,7 @@
           <span class="input-group-text" id="basic-addon1">Buscar</span>
         </div>
         <input
+          v-model="usuarioBuscado"
           type="text"
           class="form-control"
           placeholder="Usuario"
@@ -36,7 +37,7 @@
           aria-describedby="basic-addon1"
         />
       </div>
-      
+
       <!-- TABLA -->
       <div>
         <table class="table">
@@ -49,11 +50,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th scope="row">1</th>
-              <td>Mark</td>
-              <td>Otto</td>
-              <td>@mdo</td>
+            <tr v-for="(jugada, index) in filtrarJugadas" :key="index">
+              <th scope="row">{{ index + 1 }}</th>
+              <td>{{ jugada.usuario }}</td>
+              <td>{{ jugada.puntaje + '/3' }}</td>
+              <td>{{ jugada.porcentaje + '%'}}</td>
             </tr>
           </tbody>
         </table>
@@ -63,11 +64,34 @@
 </template>
 
 <script>
+import { mapState, mapActions } from "vuex";
+
 export default {
   name: "Home",
+  data() {
+    return {
+      usuarioBuscado: "",
+    };
+  },
+  created() {
+    this.getJugadas();
+  },
   methods: {
     jugar() {
       this.$router.push("/game");
+    },
+    ...mapActions(["getJugadas"]),
+  },
+  computed: {
+    ...mapState(["jugadas"]),
+    filtrarJugadas() {
+      if (this.usuarioBuscado != "") {
+        const jugador = this.jugadas.filter(
+          (item) => item.usuario == this.usuarioBuscado
+        );
+        return jugador;
+      }
+      return this.jugadas;
     },
   },
 };

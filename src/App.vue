@@ -6,12 +6,14 @@
       </router-link>
       <router-link to="/question">
         <button class="btn btn-outline-success">Añadir pregunta</button>
-      </router-link> 
+      </router-link>
       <div class="float-right">
-        <button class="btn btn-outline-primary">Cerrar sesión</button>
+        <router-link to="/game">
+          <button class="btn btn-outline-success">Jugar!</button>
+        </router-link>
       </div>
     </div>
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
