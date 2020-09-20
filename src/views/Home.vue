@@ -67,7 +67,7 @@ export default {
   name: "Home",
   methods: {
     jugar() {
-      alert("A jugar!");
+      this.$router.push("/game");
     },
   },
 };
